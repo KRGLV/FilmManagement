@@ -1,0 +1,52 @@
+<h4>List Of Films</h4>
+
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Grave" #input />
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>The Movie Title</th>
+            <td mat-cell *matCellDef="let row">
+                <button mat-button color="primary" (click)="openDialog(row.id)">{{ row.title }}</button>
+            </td>
+        </ng-container>
+
+        <!-- Director Column -->
+        <ng-container matColumnDef="director">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>The Director’s Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.director }}</td>
+        </ng-container>
+
+        <!-- Score Column -->
+        <ng-container matColumnDef="rt_score">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Movie’s Rating</th>
+            <td mat-cell *matCellDef="let row">{{ row.rt_score }}</td>
+        </ng-container>
+
+        <!-- Poster Column -->
+        <ng-container matColumnDef="poster">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+            <td mat-cell *matCellDef="let row">
+                <img src='https://lh3.googleusercontent.com/proxy/H3i-VjCxxRoilnlKbjWfldXtG2T5eHFTaf48x3BEJ8uHatP5F1DEhcWML8fIs06O40R0J9oiLFwZOtaNeTib_aKrcRjKpwqwBg5WNW4'
+                    class="poster" />
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input.value }}"
+            </td>
+        </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
